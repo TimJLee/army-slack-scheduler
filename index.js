@@ -13,8 +13,8 @@ const send = async (message) => {
         text: message,
         attachments: [
             {
-                pretext: "creatrip army",
-                color: "#00FFFF",
+                pretext: "자유의 몸이 되기까지 남은 시간",
+                color: "#00ff2a",
                 fields: [
                     {
                         title: "이재용",
@@ -23,7 +23,7 @@ const send = async (message) => {
                     },
                     {
                         title: "김정현",
-                        value: "미안해요 정현님.. 원치 않으면 삭제 해줄게요",
+                        value: "알수없음",
                         short: false
                     }
                 ]
@@ -35,7 +35,7 @@ const send = async (message) => {
 }
 
 schedule.scheduleJob('0 30 10 * * *', function () {
-    send('전역일 계산기');
+    send('우리는 자랑스러운 Creatrip army 입니다!');
 });
 
 function calculateDayLeftUntilFreedom(end) {
