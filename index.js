@@ -1,19 +1,22 @@
 const Slack = require('slack-node');
-const schedule = require('node-schedule');  // 스케줄러 모듈 사용
+const schedule = require('node-schedule');
 require('dotenv').config();
 const moment = require("moment");
 
-const webhookUrl = process.env.WEBHOOK_URL;
+const armyWebhookUrl = process.env.ARMY_WEBHOOK_URL;
+const backendDailyWebhookUrl = process.env.BACKEND_DAILY_WEBHOOK_URL;
 
-const slack = new Slack();
-slack.setWebhook(webhookUrl);
+const armySlack = new Slack();
+const backendDailySlack = new Slack();
+armySlack.setWebhook(armyWebhookUrl);
+backendDailySlack.setWebhook(backendDailyWebhookUrl);
 
-const send = async (message) => {
-    slack.webhook({
+const armyWebhook = async (message) => {
+    armySlack.webhook({
         text: message,
         attachments: [
             {
-                pretext: "자유의 몸이 되기까지 남은 시간",
+                pretext: "자유의 몸이 되기까지 남은 시간 :rocket:",
                 color: "#00ff2a",
                 fields: [
                     {
@@ -34,13 +37,28 @@ const send = async (message) => {
     });
 }
 
-schedule.scheduleJob('0 30 10 * * *', function () {
-    send('우리는 자랑스러운 Creatrip army 입니다!');
-});
+const backendDailyWebhook = async (message) => {
+    backendDailySlack.webhook({
+        text: message,
+        attachments: [
+            {
+                pretext: "지금 데일리 어떠신가요? :frog_ok:",
+            }
+        ]
+    }, function (err, response) {
+        console.log(response);
+    });
+}
 
 function calculateDayLeftUntilFreedom(end) {
     const duration = moment.duration(moment(end).diff(moment(), 'days')) + 1;
     return 'D-' + duration;
 }
 
-send();
+schedule.scheduleJob('0 30 10 * * *', function () {
+    armyWebhook('우리는 자랑스러운 Creatrip army 입니다!');
+});
+
+schedule.scheduleJob('0 30 11 * * MON,FRI', function () {
+    backendDailyWebhook('다들 출근하셨나요? :muscle:');
+});
