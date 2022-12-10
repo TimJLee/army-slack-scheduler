@@ -1,0 +1,9 @@
+# ENV
+.env
+
+# compiled output
+/dist
+/node_modules
+
+# idea
+.idea

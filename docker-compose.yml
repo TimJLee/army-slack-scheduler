@@ -1,0 +1,9 @@
+version: '1'
+
+services:
+  army-slack-scheduler:
+    build: .
+    container_name: army-slack-scheduler
+    network_mode: "host"
+    env_file:
+      - .env
