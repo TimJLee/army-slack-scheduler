@@ -60,5 +60,5 @@ schedule.scheduleJob('0 30 10 * * *', function () {
 });
 
 schedule.scheduleJob('0 0 11 * * MON,FRI', function () {
-    bobDailyWebhook('다들 점심 뭐드십니까');
+    bobDailyWebhook('다들 점심 뭐드십니까 :funny_dog:');
 });
