@@ -4,12 +4,12 @@ require('dotenv').config();
 const moment = require("moment");
 
 const armyWebhookUrl = process.env.ARMY_WEBHOOK_URL;
-const backendDailyWebhookUrl = process.env.BACKEND_DAILY_WEBHOOK_URL;
+const bobDailyWebhookUrl = process.env.BOB_DAILY_WEBHOOK_URL;
 
 const armySlack = new Slack();
 const backendDailySlack = new Slack();
 armySlack.setWebhook(armyWebhookUrl);
-backendDailySlack.setWebhook(backendDailyWebhookUrl);
+backendDailySlack.setWebhook(bobDailyWebhookUrl);
 
 const armyWebhook = async (message) => {
     armySlack.webhook({
@@ -26,7 +26,7 @@ const armyWebhook = async (message) => {
                     },
                     {
                         title: "김정현",
-                        value: "알수없음",
+                        value: calculateDayLeftUntilFreedom('2023-11-14'),
                         short: false
                     }
                 ]
@@ -37,12 +37,12 @@ const armyWebhook = async (message) => {
     });
 }
 
-const backendDailyWebhook = async (message) => {
+const bobDailyWebhook = async (message) => {
     backendDailySlack.webhook({
         text: message,
         attachments: [
             {
-                pretext: "지금 데일리 어떠신가요? :frog_ok:",
+                pretext: "한식? 일식? 중식? 라멘? 배달?",
             }
         ]
     }, function (err, response) {
@@ -59,6 +59,6 @@ schedule.scheduleJob('0 30 10 * * *', function () {
     armyWebhook('우리는 자랑스러운 Creatrip army 입니다!');
 });
 
-schedule.scheduleJob('0 30 11 * * MON,FRI', function () {
-    backendDailyWebhook('다들 출근하셨나요? :muscle:');
+schedule.scheduleJob('0 0 11 * * MON,FRI', function () {
+    bobDailyWebhook('다들 점심 뭐드십니까');
 });
