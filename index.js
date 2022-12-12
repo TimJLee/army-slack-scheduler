@@ -55,7 +55,7 @@ function calculateDayLeftUntilFreedom(end) {
     return 'D-' + duration;
 }
 
-schedule.scheduleJob('0 30 10 * * *', function () {
+schedule.scheduleJob('0 0 14 * * *', function () {
     armyWebhook('우리는 자랑스러운 Creatrip army 입니다!');
 });
 
